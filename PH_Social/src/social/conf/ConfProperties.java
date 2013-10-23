@@ -11,7 +11,7 @@ import java.util.Properties;
  * 
  * @author jychen
  * usage: ConfProperties conf = ConfProperties.getProperties(args[0]);
- *        getProperty("interval.min") 
+ *        getProperty("AppSecret") 
  */
 public class ConfProperties {
 	public static Properties getProperties(String filePath){
