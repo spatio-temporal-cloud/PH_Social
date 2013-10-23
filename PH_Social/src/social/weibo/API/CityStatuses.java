@@ -1,5 +1,5 @@
 package social.weibo.API;
 
-public class NearbyStatuses {
+public class CityStatuses {
 
 }
