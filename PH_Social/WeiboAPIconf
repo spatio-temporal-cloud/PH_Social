@@ -2,4 +2,4 @@ AccessToken=2.008x4RGBHfPdrBa6ec7a8c090NwN_q
 AppKey=1708633641
 AppSecret=013945a2145d3f00437ec68156acb1c5
 nearby_timeline=https://api.weibo.com/2/place/nearby_timeline.json
-count=50;
+count=2

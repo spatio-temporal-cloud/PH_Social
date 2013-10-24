@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import social.conf.ConfProperties;
 
 
@@ -87,17 +91,44 @@ public class CityStatuses {
 		this.conf = ConfProperties.getProperties(confFile);
 	}
 	
-	private ArrayList<String> NearbyStatuses(float lat, float lon, int range){
+	
+	
+	public ArrayList<String> NearbyStatuses(float lat, float lon, int range) throws IOException, JSONException{
+		int page=1;
+		String tmp = CallAPI(lat, lon, range, page);
+		while(!tmp.equals("[]")){
+			JSONArray result = new JSONArray("["+tmp+"]");
+			JSONObject obj = result.getJSONObject(0);
+			JSONArray arr = obj.getJSONArray("statuses");
+			for(int i=0;i<arr.length();i++){
+				String status = extractInfo(arr.getJSONObject(i));
+			}
+			page++;
+			tmp = CallAPI(lat, lon, range, page);
+		}
 		return null;
 	}
 	
-	private String CallAPI(float lat, float lon, int range,int page) throws IOException{
+	private String extractInfo(JSONObject obj) throws JSONException{
+		String user_location=obj.getJSONObject("user").getString("location");
+		String text = obj.getString("text");
+		String geo = obj.getString("geo");
+		String created_at = obj.getString("created_at");
+		return null;
+	}
+	
+	private void storeToMongodb(){
+		
+	}
+	
+	public String CallAPI(float lat, float lon, int range,int page) throws IOException{
 		String line="";
 		String result="";
 		String url = conf.getProperty("nearby_timeline") + 
 				"?access_token=" + conf.getProperty("AccessToken") + 
-				"&lat="+lat+"&long="+lon+"&range="+range+"&page="+page+
-				"count="+conf.getProperty("count");
+				"&lat="+lat+"&long="+lon+"&range="+range+
+				"&count="+conf.getProperty("count")+"&page="+page;
+		System.out.println(url);
 		URL cityList = 
 				new URL(url);
 		BufferedReader in = new BufferedReader(new InputStreamReader(
