@@ -44,6 +44,7 @@ public class CityStatuses {
 				System.out.println("("+x+","+y+"): " + count + " records added");
 			}
 		}
+		System.out.println("Finished");
 	}
 	
 	private int NearbyStatuses(float lat, float lon, int range)
