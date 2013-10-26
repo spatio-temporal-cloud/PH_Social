@@ -25,8 +25,10 @@ import social.conf.ConfProperties;
 
 public class CityStatuses {
 	private Properties conf = null;
-	public CityStatuses(String confFile) {
+	private MongoClient mongoClient = null;
+	public CityStatuses(String confFile) throws UnknownHostException {
 		this.conf = ConfProperties.getProperties(confFile);
+		mongoClient = new MongoClient();
 	}
 
 	public void execute() throws IOException, JSONException, ParseException, InterruptedException{
@@ -98,7 +100,6 @@ public class CityStatuses {
 	}
 
 	private void storeToMongodb(String json) throws UnknownHostException {
-		MongoClient mongoClient = new MongoClient();
 		DB db = mongoClient.getDB(conf.getProperty("db"));
 		DBCollection coll = db.getCollection(conf.getProperty("collection"));
 		DBObject dbObject = (DBObject) JSON.parse(json);
