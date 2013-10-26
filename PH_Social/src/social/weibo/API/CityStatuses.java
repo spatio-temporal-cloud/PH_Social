@@ -32,6 +32,12 @@ public class CityStatuses {
 	}
 
 	public void execute() throws IOException, JSONException, ParseException, InterruptedException{
+		System.out.println("The program will record weibos of ");
+		System.out.println(conf.getProperty("city") + " from " + conf.getProperty("startTime") + " to "
+				+ conf.getProperty("endTime") + ", ");
+		System.out.println("and store them in " + conf.getProperty("db") + "." + 
+				conf.getProperty("collection"));
+		System.out.println(".......................begin........................");
 		float lat_north=Float.parseFloat(conf.getProperty("lat_north"));
 		float lat_south=Float.parseFloat(conf.getProperty("lat_south"));
 		float lon_west=Float.parseFloat(conf.getProperty("lon_west"));
@@ -44,7 +50,7 @@ public class CityStatuses {
 				System.out.println("("+x+","+y+"): " + count + " records added");
 			}
 		}
-		System.out.println("Finished");
+		System.out.println(".......................end........................");
 	}
 	
 	private int NearbyStatuses(float lat, float lon, int range)
@@ -77,7 +83,6 @@ public class CityStatuses {
 			JSONException {
 		
 		long id = obj.getLong("id");
-		MongoClient mongoClient = new MongoClient();
 		DB db = mongoClient.getDB(conf.getProperty("db"));
 		DBCollection coll = db.getCollection(conf.getProperty("collection"));
 		BasicDBObject query = new BasicDBObject("id", id);
