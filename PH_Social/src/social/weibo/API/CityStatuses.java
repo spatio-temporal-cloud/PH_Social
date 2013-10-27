@@ -95,7 +95,9 @@ public class CityStatuses {
 
 	private String extractInfo(JSONObject obj) throws JSONException {
 		String user_location = obj.getJSONObject("user").getString("location");
+		user_location=user_location.replaceAll("\"", "\\\\\"");
 		String text = obj.getString("text");
+		text=text.replaceAll("\"", "\\\\\"");
 		String geo = obj.getString("geo");
 		String created_at = obj.getString("created_at");
 		long id = obj.getLong("id");
